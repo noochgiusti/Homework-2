@@ -1,0 +1,60 @@
+Sub stock_data()
+
+  Dim ticker As String
+
+  
+  Dim volume As Double
+  volume = 0
+
+
+  Dim Summary_Table_Row As Integer
+  Summary_Table_Row = 2
+
+  
+  For i = 2 To 797711
+
+ 
+    If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+
+      ticker = Cells(i, 1).Value
+
+      volume = volume + Cells(i, 7).Value
+
+
+      Range("J" & Summary_Table_Row).Value = ticker
+
+      Range("K" & Summary_Table_Row).Value = volume
+
+      Summary_Table_Row = Summary_Table_Row + 1
+
+      volume = 0
+
+    Else
+
+      volume = volume + Cells(i, 7).Value
+
+    End If
+
+
+    Dim closed As Double
+    closed = Cells(i, 6)
+
+    Dim Opened As Double
+    Opened = Cells(i, 3)
+
+    Cells(i, 8) = ((closed - Opened) / Opened * 100)
+    
+    Cells(i, 9) = (closed - Opened)
+
+    If Cells(i, 8) > 0 Then
+    Cells(i, 8).Interior.ColorIndex = 4
+
+    ElseIf Cells(i, 8) < 0 Then
+    Cells(i, 8).Interior.ColorIndex = 3
+    
+
+    End If
+
+  Next i
+
+End Sub
